@@ -1,7 +1,7 @@
 install:
 		poetry install
 start:
-		poetry run gendiff -h
+		poetry run gendiff /home/matveik/dev_work/projects/file1.json /home/matveik/dev_work/projects/file2.json
 build:
 		poetry build
 
