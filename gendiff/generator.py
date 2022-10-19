@@ -48,4 +48,4 @@ def generate_diff(file_path1, file_path2):
             answer_lst.append("".join(f"  - {elem[0]}: {elem[1]}"))
         elif tuple(elem) in second_set and tuple(elem) not in first_set:
             answer_lst.append("".join(f"  + {elem[0]}: {elem[1]}"))
-    return "{0}\n{1}\n{2}".format('{', "\n".join(answer_lst), '}')
+    return "{0}\n{1}\n{2}\n".format('{', "\n".join(answer_lst), '}')
