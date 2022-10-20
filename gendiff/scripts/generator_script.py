@@ -1,10 +1,11 @@
 #! usr/bin/env python3
 
-from gendiff.generator import generate_diff, generate_reference
+from gendiff.parser import generate_diff
+from gendiff.cli import get_args
 
 
 def main():
-    path1, path2 = generate_reference()
+    path1, path2 = get_args()
     print(generate_diff(path1, path2))
 
 

@@ -1,7 +1,7 @@
 install:
 		poetry install
 start:
-		poetry run gendiff /home/matveik/dev_work/projects/file1.json /home/matveik/dev_work/projects/file2.json
+		poetry run gendiff /home/matveik/dev_work/projects/file1.yaml /home/matveik/dev_work/projects/file2.yaml
 build:
 		poetry build
 
@@ -10,6 +10,9 @@ publish:
 
 package-install:
 		python3 -m pip install dist/*.whl
+
+package-reinstall:
+		python3 -m pip install --force-reinstall dist/*.whl
 
 lint:
 		poetry run flake8 gendiff

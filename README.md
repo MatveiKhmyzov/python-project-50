@@ -5,3 +5,5 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/4342d0903078ab87467f/test_coverage)](https://codeclimate.com/github/MatveiKhmyzov/python-project-50/test_coverage)
 ### Gendiff example work
 [![asciicast](https://asciinema.org/a/G5To8to4IB5zAZMqXg8ZiUR9y.svg)](https://asciinema.org/a/G5To8to4IB5zAZMqXg8ZiUR9y)
+### Gendiff JSON and YAML
+[![asciicast](https://asciinema.org/a/GgHkN1TdFnLAdRMHLrmtDHvNm.svg)](https://asciinema.org/a/GgHkN1TdFnLAdRMHLrmtDHvNm)
