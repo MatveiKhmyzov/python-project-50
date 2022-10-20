@@ -17,4 +17,7 @@ lint:
 test:
 		poetry run pytest
 
-.PHONY: install start build publish package-install lint test
+test-coverage:
+		poetry run pytest --cov=gendiff --cov-report xml tests/
+
+.PHONY: install start build publish package-install lint test test-coverage
