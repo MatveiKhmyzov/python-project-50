@@ -7,3 +7,5 @@
 [![asciicast](https://asciinema.org/a/G5To8to4IB5zAZMqXg8ZiUR9y.svg)](https://asciinema.org/a/G5To8to4IB5zAZMqXg8ZiUR9y)
 ### Gendiff JSON and YAML
 [![asciicast](https://asciinema.org/a/GgHkN1TdFnLAdRMHLrmtDHvNm.svg)](https://asciinema.org/a/GgHkN1TdFnLAdRMHLrmtDHvNm)
+### Gendiff complex JSON and YAML
+[![asciicast](https://asciinema.org/a/1binutmnsJjPsHrpUFsKdVPYS.svg)](https://asciinema.org/a/1binutmnsJjPsHrpUFsKdVPYS)

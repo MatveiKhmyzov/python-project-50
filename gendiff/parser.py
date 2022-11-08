@@ -2,37 +2,44 @@ import json
 import yaml
 
 
-def change_order_single_tuples(item):
-    for i in range(len(item) - 1):
-        if item[i][0] == item[i + 1][0]:
-            item[i], item[i + 1] = item[i + 1], item[i]
-    return item
-
-
-def change_capital_word(iter_obj):
-    for key in iter_obj:
-        if type(iter_obj[key]) is bool:
-            iter_obj[key] = str(iter_obj[key]).lower()
-    return iter_obj
-
-
-def generate_diff(file_path1, file_path2):
+def reader(file_path1, file_path2):
     if ".json" in file_path1:
-        first_file = change_capital_word(json.load(open(file_path1)))
-        second_file = change_capital_word(json.load(open(file_path2)))
-    first_file = change_capital_word(yaml.load(open(file_path1), Loader=yaml.SafeLoader))
-    second_file = change_capital_word(yaml.load(open(file_path2), Loader=yaml.SafeLoader))
-    first_set = set(first_file.items())
-    second_set = set(second_file.items())
-    union = first_set | second_set
-    union_lst = [list(i) for i in union]
-    result_lst = change_order_single_tuples(sorted(union_lst))
-    answer_lst = []
-    for elem in result_lst:
-        if tuple(elem) in first_set and tuple(elem) in second_set:
-            answer_lst.append("".join(f"    {elem[0]}: {elem[1]}"))
-        elif tuple(elem) in first_set and tuple(elem) not in second_set:
-            answer_lst.append("".join(f"  - {elem[0]}: {elem[1]}"))
-        elif tuple(elem) in second_set and tuple(elem) not in first_set:
-            answer_lst.append("".join(f"  + {elem[0]}: {elem[1]}"))
-    return "{0}\n{1}\n{2}\n".format('{', "\n".join(answer_lst), '}')
+        first_file = json.load(open(file_path1))
+        second_file = json.load(open(file_path2))
+    else:
+        first_file = yaml.load(open(file_path1), Loader=yaml.SafeLoader)
+        second_file = yaml.load(open(file_path2), Loader=yaml.SafeLoader)
+    return first_file, second_file
+
+
+def sort_dict(result_dict, file1, file2):
+    only_first_file_keys = (list(file1.keys() - file2.keys()))
+    only_second_file_keys = (list(file2.keys() - file1.keys()))
+
+    return {k: sort_dict(v, file1, file2) if isinstance(v, dict)
+            and k[2:] not in (set(only_first_file_keys) | set(only_second_file_keys))  # noqa: W503, E501
+            else v for k, v
+            in sorted(result_dict.items(), key=lambda x: x[0][2:])}
+
+
+def generate_diff(file1, file2):  # noqa: C901
+    union_keys = (list(file1.keys() & file2.keys()))
+    only_first_file_keys = (list(file1.keys() - file2.keys()))
+    only_second_file_keys = (list(file2.keys() - file1.keys()))
+    result_dict = {}
+    for elem in union_keys:
+        if file1[elem] == file2[elem]:
+            result_dict['  ' + elem] = str(file1[elem])
+        if file1[elem] != file2[elem]:
+            if type(file1[elem]) == dict and type(file2[elem]) == dict:
+                result_dict['  ' + elem] = generate_diff(file1[elem],
+                                                         file2[elem])
+            else:
+                result_dict['- ' + elem] = file1[elem]
+                result_dict['+ ' + elem] = file2[elem]
+    for i in only_first_file_keys:
+        result_dict[('- ' + i)] = file1[i]
+    for i in only_second_file_keys:
+        result_dict[('+ ' + i)] = file2[i]
+
+    return sort_dict(result_dict, file1, file2)

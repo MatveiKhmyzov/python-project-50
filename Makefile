@@ -1,7 +1,7 @@
 install:
 		poetry install
 start:
-		poetry run gendiff /home/matveik/dev_work/projects/file1.yaml /home/matveik/dev_work/projects/file2.yaml
+		poetry run gendiff /home/matveik/dev_work/projects/bigfile1.yaml /home/matveik/dev_work/projects/bigfile2.yaml
 build:
 		poetry build
 
