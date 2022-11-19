@@ -9,3 +9,5 @@
 [![asciicast](https://asciinema.org/a/GgHkN1TdFnLAdRMHLrmtDHvNm.svg)](https://asciinema.org/a/GgHkN1TdFnLAdRMHLrmtDHvNm)
 ### Gendiff complex JSON and YAML
 [![asciicast](https://asciinema.org/a/1binutmnsJjPsHrpUFsKdVPYS.svg)](https://asciinema.org/a/1binutmnsJjPsHrpUFsKdVPYS)
+### Two formats for diff
+[![asciicast](https://asciinema.org/a/OH51Qddj91rUkwBvbbUd4beND.svg)](https://asciinema.org/a/OH51Qddj91rUkwBvbbUd4beND)
