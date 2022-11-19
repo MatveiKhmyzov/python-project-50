@@ -11,7 +11,7 @@ def get_args():
     parser.add_argument('first_file')
     parser.add_argument('second_file')
     parser.add_argument('-f', '--format', default="stylish",
-                        help='set format of output (default: stylish)')
+                        help='set format of output: (default: stylish)')
     args = parser.parse_args()
     file_path1 = args.first_file
     file_path2 = args.second_file

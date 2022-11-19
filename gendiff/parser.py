@@ -12,34 +12,116 @@ def reader(file_path1, file_path2):
     return first_file, second_file
 
 
-def sort_dict(result_dict, file1, file2):
-    only_first_file_keys = (list(file1.keys() - file2.keys()))
-    only_second_file_keys = (list(file2.keys() - file1.keys()))
+def get_tree(node):
+    res = []
+    for key in node.keys():
+        if type(node[key]) is dict:
+            res.append({
+                'name': key,
+                'children': get_tree(node[key]),
+                'action': 'not changed',
+                'type': 'internal node'
+            })
+        else:
+            res.append({
+                'name': key,
+                'children': node[key],
+                'action': 'not changed',
+                'type': 'leaf'
+            })
+    return res
 
-    return {k: sort_dict(v, file1, file2) if isinstance(v, dict)
-            and k[2:] not in (set(only_first_file_keys) | set(only_second_file_keys))  # noqa: W503, E501
-            else v for k, v
-            in sorted(result_dict.items(), key=lambda x: x[0][2:])}
+
+def sort_diff(diff_tree):
+    sorted_dict = sorted(diff_tree, key=lambda d: d['name'])
+    for item in sorted_dict:
+        if type(item['children']) is list:
+            item['children'] = sort_diff(item['children'])
+    return sorted_dict
 
 
 def generate_diff(file1, file2):  # noqa: C901
-    union_keys = (list(file1.keys() & file2.keys()))
-    only_first_file_keys = (list(file1.keys() - file2.keys()))
-    only_second_file_keys = (list(file2.keys() - file1.keys()))
-    result_dict = {}
-    for elem in union_keys:
-        if file1[elem] == file2[elem]:
-            result_dict['  ' + elem] = str(file1[elem])
-        if file1[elem] != file2[elem]:
-            if type(file1[elem]) == dict and type(file2[elem]) == dict:
-                result_dict['  ' + elem] = generate_diff(file1[elem],
-                                                         file2[elem])
+    union_keys = list(file1.keys() & file2.keys())
+    only_first_file_keys = list(file1.keys() - file2.keys())
+    only_second_file_keys = list(file2.keys() - file1.keys())
+    diff_tree = []
+    for key in union_keys:
+        if file1[key] == file2[key]:
+            diff_tree.append({
+                'name': key,
+                'children': file1[key],
+                'action': 'not changed',
+                'type': 'leaf'
+            })
+        if file1[key] != file2[key]:
+            if type(file1[key]) == dict and type(file2[key]) == dict:
+                diff_tree.append({
+                    'name': key,
+                    'children': generate_diff(file1[key], file2[key]),
+                    'action': 'not changed',
+                    'type': 'internal node'
+                })
             else:
-                result_dict['- ' + elem] = file1[elem]
-                result_dict['+ ' + elem] = file2[elem]
-    for i in only_first_file_keys:
-        result_dict[('- ' + i)] = file1[i]
-    for i in only_second_file_keys:
-        result_dict[('+ ' + i)] = file2[i]
+                if type(file1[key]) == dict:
+                    diff_tree.append({
+                        'name': key,
+                        'children': get_tree(file1[key]),
+                        'action': 'to update',
+                        'type': 'leaf'
+                    })
+                else:
+                    diff_tree.append({
+                        'name': key,
+                        'children': file1[key],
+                        'action': 'to update',
+                        'type': 'leaf'
+                    })
+                if type(file2[key]) == dict:
+                    if key in file1:
+                        diff_tree.append({
+                            'name': key,
+                            'children': get_tree(file2[key]),
+                            'action': 'updated',
+                            'type': 'leaf',
+                        })
+                else:
+                    if key in file1:
+                        diff_tree.append({
+                            'name': key,
+                            'children': file2[key],
+                            'action': 'updated',
+                            'type': 'leaf',
+                        })
 
-    return sort_dict(result_dict, file1, file2)
+    for key in only_first_file_keys:
+        if type(file1[key]) is dict:
+            diff_tree.append({
+                'name': key,
+                'children': get_tree(file1[key]),
+                'action': 'delete',
+                'type': 'internal node'
+            })
+        else:
+            diff_tree.append({
+                'name': key,
+                'children': file1[key],
+                'action': 'delete',
+                'type': 'leaf'
+            })
+    for key in only_second_file_keys:
+        if type(file2[key]) is dict:
+            diff_tree.append({
+                'name': key,
+                'children': get_tree(file2[key]),
+                'action': 'add',
+                'type': 'internal node'
+            })
+        else:
+            diff_tree.append({
+                'name': key,
+                'children': file2[key],
+                'action': 'add',
+                'type': 'leaf'
+            })
+
+    return sort_diff(diff_tree)
