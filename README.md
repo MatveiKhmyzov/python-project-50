@@ -11,3 +11,6 @@
 [![asciicast](https://asciinema.org/a/1binutmnsJjPsHrpUFsKdVPYS.svg)](https://asciinema.org/a/1binutmnsJjPsHrpUFsKdVPYS)
 ### Two formats for diff
 [![asciicast](https://asciinema.org/a/OH51Qddj91rUkwBvbbUd4beND.svg)](https://asciinema.org/a/OH51Qddj91rUkwBvbbUd4beND)
+### Third view - JSON for diff
+[![asciicast](https://asciinema.org/a/8vI3f697QOQAQBnWcoPLfE2Bw.svg)](https://asciinema.org/a/8vI3f697QOQAQBnWcoPLfE2Bw)
+

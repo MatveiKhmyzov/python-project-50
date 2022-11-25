@@ -1,18 +1,8 @@
+from gendiff.formats.validators import get_format_values
+
+
 def get_plain(file):
     return plain(file)
-
-
-def get_format_values(value):
-    if value is True:
-        return "true"
-    if value is False:
-        return "false"
-    if value is None:
-        return "null"
-    if value == "[complex value]":
-        return "[complex value]"
-    else:
-        return "'{}'".format(value)
 
 
 def plain(diff_tree, path=None):  # noqa: C901

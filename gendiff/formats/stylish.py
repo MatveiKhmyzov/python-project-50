@@ -1,17 +1,8 @@
+from gendiff.formats.validators import get_valid_data
+
+
 def get_stylish(file):
     return stylish(file)
-
-
-def get_valid_data(diff_tree):
-    for node in diff_tree:
-        if type(node['children']) is list:
-            get_valid_data(node['children'])
-        else:
-            if type(node['children']) is bool:
-                node['children'] = str(node['children']).lower()
-            if node['children'] is None:
-                node['children'] = "null"
-    return diff_tree
 
 
 def stylish(diff_tree, level_nest=0):  # noqa: C901

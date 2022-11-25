@@ -18,16 +18,16 @@ def get_tree(node):
         if type(node[key]) is dict:
             res.append({
                 'name': key,
-                'children': get_tree(node[key]),
                 'action': 'not changed',
-                'type': 'internal node'
+                'type': 'internal node',
+                'children': get_tree(node[key])
             })
         else:
             res.append({
                 'name': key,
-                'children': node[key],
                 'action': 'not changed',
-                'type': 'leaf'
+                'type': 'leaf',
+                'children': node[key]
             })
     return res
 
@@ -49,79 +49,79 @@ def generate_diff(file1, file2):  # noqa: C901
         if file1[key] == file2[key]:
             diff_tree.append({
                 'name': key,
-                'children': file1[key],
                 'action': 'not changed',
-                'type': 'leaf'
+                'type': 'leaf',
+                'children': file1[key]
             })
         if file1[key] != file2[key]:
             if type(file1[key]) == dict and type(file2[key]) == dict:
                 diff_tree.append({
                     'name': key,
-                    'children': generate_diff(file1[key], file2[key]),
                     'action': 'not changed',
-                    'type': 'internal node'
+                    'type': 'internal node',
+                    'children': generate_diff(file1[key], file2[key])
                 })
             else:
                 if type(file1[key]) == dict:
                     diff_tree.append({
                         'name': key,
-                        'children': get_tree(file1[key]),
                         'action': 'to update',
-                        'type': 'leaf'
+                        'type': 'leaf',
+                        'children': get_tree(file1[key])
                     })
                 else:
                     diff_tree.append({
                         'name': key,
-                        'children': file1[key],
                         'action': 'to update',
-                        'type': 'leaf'
+                        'type': 'leaf',
+                        'children': file1[key]
                     })
                 if type(file2[key]) == dict:
                     if key in file1:
                         diff_tree.append({
                             'name': key,
-                            'children': get_tree(file2[key]),
                             'action': 'updated',
                             'type': 'leaf',
+                            'children': get_tree(file2[key])
                         })
                 else:
                     if key in file1:
                         diff_tree.append({
                             'name': key,
-                            'children': file2[key],
                             'action': 'updated',
                             'type': 'leaf',
+                            'children': file2[key]
                         })
 
     for key in only_first_file_keys:
         if type(file1[key]) is dict:
             diff_tree.append({
                 'name': key,
-                'children': get_tree(file1[key]),
                 'action': 'delete',
-                'type': 'internal node'
+                'type': 'internal node',
+                'children': get_tree(file1[key])
             })
         else:
             diff_tree.append({
                 'name': key,
-                'children': file1[key],
                 'action': 'delete',
-                'type': 'leaf'
+                'type': 'leaf',
+                'children': file1[key]
             })
     for key in only_second_file_keys:
         if type(file2[key]) is dict:
             diff_tree.append({
                 'name': key,
-                'children': get_tree(file2[key]),
                 'action': 'add',
-                'type': 'internal node'
+                'type': 'internal node',
+                'children': get_tree(file2[key])
             })
         else:
             diff_tree.append({
                 'name': key,
-                'children': file2[key],
                 'action': 'add',
-                'type': 'leaf'
+                'type': 'leaf',
+                'children': file2[key]
             })
 
     return sort_diff(diff_tree)
