@@ -8,37 +8,37 @@
                 "name": "follow",
                 "action": "add",
                 "type": "leaf",
-                "children": "false"
+                "value": "false"
                },
                {
                 "name": "setting1",
                 "action": "not changed",
                 "type": "leaf",
-                "children": "Value 1"
+                "value": "Value 1"
                },
                {
                 "name": "setting2",
                 "action": "delete",
                 "type": "leaf",
-                "children": "200"
+                "value": "200"
                },
                {
                 "name": "setting3",
                 "action": "to update",
                 "type": "leaf",
-                "children": "true"
+                "value": "true"
                },
                {
                 "name": "setting3",
                 "action": "updated",
                 "type": "leaf",
-                "children": "null"
+                "value": "null"
                },
                {
                 "name": "setting4",
                 "action": "add",
                 "type": "leaf",
-                "children": "blah blah"
+                "value": "blah blah"
                },
                {
                 "name": "setting5",
@@ -49,7 +49,7 @@
                               "name": "key5",
                               "action": "not changed",
                               "type": "leaf",
-                              "children": "value5"
+                              "value": "value5"
                              }
                             ]
                },
@@ -67,13 +67,13 @@
                                             "name": "wow",
                                             "action": "to update",
                                             "type": "leaf",
-                                            "children": ""
+                                            "value": ""
                                            },
                                            {
                                             "name": "wow",
                                             "action": "updated",
                                             "type": "leaf",
-                                            "children": "so much"
+                                            "value": "so much"
                                            }
                                           ]
                              },
@@ -81,13 +81,13 @@
                               "name": "key",
                               "action": "not changed",
                               "type": "leaf",
-                              "children": "value"
+                              "value": "value"
                              },
                              {
                               "name": "ops",
                               "action": "add",
                               "type": "leaf",
-                              "children": "vops"
+                              "value": "vops"
                              }
                             ]
                }
@@ -102,30 +102,30 @@
                 "name": "baz",
                 "action": "to update",
                 "type": "leaf",
-                "children": "bas"
+                "value": "bas"
                },
                {
                 "name": "baz",
                 "action": "updated",
                 "type": "leaf",
-                "children": "bars"
+                "value": "bars"
                },
                {
                 "name": "foo",
                 "action": "not changed",
                 "type": "leaf",
-                "children": "bar"
+                "value": "bar"
                },
                {
                 "name": "nest",
                 "action": "to update",
-                "type": "leaf",
+                "type": "internal node",
                 "children": [
                              {
                               "name": "key",
                               "action": "not changed",
                               "type": "leaf",
-                              "children": "value"
+                              "value": "value"
                              }
                             ]
                },
@@ -133,7 +133,7 @@
                 "name": "nest",
                 "action": "updated",
                 "type": "leaf",
-                "children": "str"
+                "value": "str"
                }
               ]
  },
@@ -146,7 +146,7 @@
                 "name": "abc",
                 "action": "not changed",
                 "type": "leaf",
-                "children": "12345"
+                "value": "12345"
                },
                {
                 "name": "deep",
@@ -157,7 +157,7 @@
                               "name": "id",
                               "action": "not changed",
                               "type": "leaf",
-                              "children": "45"
+                              "value": "45"
                              }
                             ]
                }
@@ -182,7 +182,7 @@
                                             "name": "number",
                                             "action": "not changed",
                                             "type": "leaf",
-                                            "children": "45"
+                                            "value": "45"
                                            }
                                           ]
                              }
@@ -192,7 +192,7 @@
                 "name": "fee",
                 "action": "not changed",
                 "type": "leaf",
-                "children": "100500"
+                "value": "100500"
                }
               ]
  }

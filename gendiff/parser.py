@@ -27,7 +27,7 @@ def get_tree(node):
                 'name': key,
                 'action': 'not changed',
                 'type': 'leaf',
-                'children': node[key]
+                'value': node[key]
             })
     return res
 
@@ -35,7 +35,7 @@ def get_tree(node):
 def sort_diff(diff_tree):
     sorted_dict = sorted(diff_tree, key=lambda d: d['name'])
     for item in sorted_dict:
-        if type(item['children']) is list:
+        if item['type'] == 'internal node':
             item['children'] = sort_diff(item['children'])
     return sorted_dict
 
@@ -51,7 +51,7 @@ def generate_diff(file1, file2):  # noqa: C901
                 'name': key,
                 'action': 'not changed',
                 'type': 'leaf',
-                'children': file1[key]
+                'value': file1[key]
             })
         if file1[key] != file2[key]:
             if type(file1[key]) == dict and type(file2[key]) == dict:
@@ -66,7 +66,7 @@ def generate_diff(file1, file2):  # noqa: C901
                     diff_tree.append({
                         'name': key,
                         'action': 'to update',
-                        'type': 'leaf',
+                        'type': 'internal node',
                         'children': get_tree(file1[key])
                     })
                 else:
@@ -74,14 +74,14 @@ def generate_diff(file1, file2):  # noqa: C901
                         'name': key,
                         'action': 'to update',
                         'type': 'leaf',
-                        'children': file1[key]
+                        'value': file1[key]
                     })
                 if type(file2[key]) == dict:
                     if key in file1:
                         diff_tree.append({
                             'name': key,
                             'action': 'updated',
-                            'type': 'leaf',
+                            'type': 'internal node',
                             'children': get_tree(file2[key])
                         })
                 else:
@@ -90,7 +90,7 @@ def generate_diff(file1, file2):  # noqa: C901
                             'name': key,
                             'action': 'updated',
                             'type': 'leaf',
-                            'children': file2[key]
+                            'value': file2[key]
                         })
 
     for key in only_first_file_keys:
@@ -106,7 +106,7 @@ def generate_diff(file1, file2):  # noqa: C901
                 'name': key,
                 'action': 'delete',
                 'type': 'leaf',
-                'children': file1[key]
+                'value': file1[key]
             })
     for key in only_second_file_keys:
         if type(file2[key]) is dict:
@@ -121,7 +121,7 @@ def generate_diff(file1, file2):  # noqa: C901
                 'name': key,
                 'action': 'add',
                 'type': 'leaf',
-                'children': file2[key]
+                'value': file2[key]
             })
 
     return sort_diff(diff_tree)

@@ -7,7 +7,7 @@ def get_stylish(file):
 
 def stylish(diff_tree, level_nest=0):  # noqa: C901
     valid_diff = get_valid_data(diff_tree)
-    result_view = "{\n"
+    result_view = '{\n'
     indent = '  '
     action = ''
     for i in range(level_nest):
@@ -19,12 +19,12 @@ def stylish(diff_tree, level_nest=0):  # noqa: C901
             action = '- '
         if node['action'] == 'add' or node['action'] == 'updated':
             action = '+ '
-        if type(node['children']) is list:
+        if node['type'] == 'internal node':
             result_view += indent + action + node['name'] + ': '\
                 + stylish(node['children'], level_nest + 1) + '\n'
         else:
             result_view += indent + action + node['name'] + ': '\
-                + str(node['children']) + '\n'
+                + str(node['value']) + '\n'
     if level_nest == 0:
         result_view += indent[:-2] + '}\n'
     else:
