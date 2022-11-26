@@ -2,14 +2,11 @@ import json
 import yaml
 
 
-def reader(file_path1, file_path2):
-    if ".json" in file_path1:
-        first_file = json.load(open(file_path1))
-        second_file = json.load(open(file_path2))
+def reader(path_file):
+    if ".json" in path_file:
+        return json.load(open(path_file))
     else:
-        first_file = yaml.load(open(file_path1), Loader=yaml.SafeLoader)
-        second_file = yaml.load(open(file_path2), Loader=yaml.SafeLoader)
-    return first_file, second_file
+        return yaml.load(open(path_file), Loader=yaml.SafeLoader)
 
 
 def get_tree(node):
@@ -40,7 +37,14 @@ def sort_diff(diff_tree):
     return sorted_dict
 
 
-def generate_diff(file1, file2):  # noqa: C901
+def generate_diff(path_file1, path_file2):  # noqa: C901
+    file1 = reader(path_file1)
+    file2 = reader(path_file2)
+    diff_tree = get_diff(file1, file2)
+    return diff_tree
+
+
+def get_diff(file1, file2):
     union_keys = list(file1.keys() & file2.keys())
     only_first_file_keys = list(file1.keys() - file2.keys())
     only_second_file_keys = list(file2.keys() - file1.keys())
@@ -59,7 +63,7 @@ def generate_diff(file1, file2):  # noqa: C901
                     'name': key,
                     'action': 'not changed',
                     'type': 'internal node',
-                    'children': generate_diff(file1[key], file2[key])
+                    'children': get_diff(file1[key], file2[key])
                 })
             else:
                 if type(file1[key]) == dict:
@@ -77,21 +81,19 @@ def generate_diff(file1, file2):  # noqa: C901
                         'value': file1[key]
                     })
                 if type(file2[key]) == dict:
-                    if key in file1:
-                        diff_tree.append({
-                            'name': key,
-                            'action': 'updated',
-                            'type': 'internal node',
-                            'children': get_tree(file2[key])
-                        })
+                    diff_tree.append({
+                        'name': key,
+                        'action': 'updated',
+                        'type': 'internal node',
+                        'children': get_tree(file2[key])
+                    })
                 else:
-                    if key in file1:
-                        diff_tree.append({
-                            'name': key,
-                            'action': 'updated',
-                            'type': 'leaf',
-                            'value': file2[key]
-                        })
+                    diff_tree.append({
+                        'name': key,
+                        'action': 'updated',
+                        'type': 'leaf',
+                        'value': file2[key]
+                    })
 
     for key in only_first_file_keys:
         if type(file1[key]) is dict:
