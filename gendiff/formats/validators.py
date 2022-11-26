@@ -14,12 +14,13 @@ def get_valid_data(diff_tree):
 
 def get_format_values(value):
     if value is True:
-        return 'true'
-    if value is False:
-        return 'false'
-    if value is None:
-        return 'null'
-    if value == '[complex value]':
-        return '[complex value]'
+        value = 'true'
+    elif value is False:
+        value = 'false'
+    elif value is None:
+        value = 'null'
+    elif value == '[complex value]':
+        value = '[complex value]'
     else:
-        return "'{}'".format(value)
+        value = "'{}'".format(value)
+    return value
