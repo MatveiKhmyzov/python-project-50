@@ -28,8 +28,8 @@ def get_json(result_dict, level_nest=0):  # noqa: C901
             result_view += indent[:-1] + "}\n"
         else:
             result_view += indent[:-1] + "},\n"
-    if level_nest == 0:
+    if level_nest != 0:
         result_view += indent[:-2] + "]\n"
     else:
-        result_view += indent[:-2] + "]\n"
+        result_view += indent[:-2] + "]"
     return result_view

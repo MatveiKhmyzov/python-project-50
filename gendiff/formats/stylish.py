@@ -25,8 +25,5 @@ def stylish(diff_tree, level_nest=0):  # noqa: C901
         else:
             result_view += indent + action + node['name'] + ': '\
                 + str(node['value']) + '\n'
-    if level_nest == 0:
-        result_view += indent[:-2] + '}\n'
-    else:
-        result_view += indent[:-2] + '}'
+    result_view += indent[:-2] + '}'
     return result_view
