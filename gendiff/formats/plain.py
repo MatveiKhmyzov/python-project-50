@@ -36,8 +36,10 @@ def plain(diff_tree, path=None):  # noqa: C901
             phrase_lst.append(sentence + ' was removed')
         if diff_tree[item]['action'] == 'to update':
             before_value = get_format_values(value)
-            after_value = get_format_values(diff_tree[item + 1]['value'])
+            after_value = '[complex value]' \
+                if diff_tree[item + 1]['type'] == 'internal node'\
+                else diff_tree[item + 1]['value']
             complex_str = f'{sentence} was updated.' \
-                          f' From {before_value} to {after_value}'
+                          f' From {before_value} to {get_format_values(after_value)}'
             phrase_lst.append(complex_str)
     return phrase_lst
