@@ -16,4 +16,4 @@ def get_args():
     file_path1 = args.first_file
     file_path2 = args.second_file
     name_format = args.format
-    return name_format, file_path1, file_path2
+    return file_path1, file_path2, name_format

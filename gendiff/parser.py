@@ -1,3 +1,4 @@
+from gendiff.formats.formatter import get_formatted_data
 import json
 import yaml
 
@@ -37,14 +38,14 @@ def sort_diff(diff_tree):
     return sorted_dict
 
 
-def generate_diff(path_file1, path_file2):  # noqa: C901
+def generate_diff(path_file1, path_file2, format_name="stylish"):
     file1 = reader(path_file1)
     file2 = reader(path_file2)
     diff_tree = get_diff(file1, file2)
-    return diff_tree
+    return get_formatted_data(diff_tree, format_name)
 
 
-def get_diff(file1, file2):
+def get_diff(file1, file2):  # noqa: C901
     union_keys = list(file1.keys() & file2.keys())
     only_first_file_keys = list(file1.keys() - file2.keys())
     only_second_file_keys = list(file2.keys() - file1.keys())
