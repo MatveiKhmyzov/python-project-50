@@ -40,6 +40,7 @@ def plain(diff_tree, path=None):  # noqa: C901
                 if diff_tree[item + 1]['type'] == 'internal node'\
                 else diff_tree[item + 1]['value']
             complex_str = f'{sentence} was updated.' \
-                          f' From {before_value} to {get_format_values(after_value)}'
+                          f' From {before_value}' \
+                          f' to {get_format_values(after_value)}'
             phrase_lst.append(complex_str)
     return phrase_lst

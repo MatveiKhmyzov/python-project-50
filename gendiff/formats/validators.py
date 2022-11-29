@@ -13,6 +13,7 @@ def get_valid_data(diff_tree):
 
 
 def get_format_values(value):
+    # print(value, type(value))
     if value is True:
         value = 'true'
     elif value is False:
@@ -21,6 +22,8 @@ def get_format_values(value):
         value = 'null'
     elif value == '[complex value]':
         value = '[complex value]'
-    else:
+    elif isinstance(value, str):
         value = "'{}'".format(value)
+    else:
+        value = "{}".format(value)
     return value
