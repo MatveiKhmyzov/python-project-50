@@ -1,4 +1,4 @@
-from gendiff import generate_diff, reader, get_formatted_data
+from gendiff import generate_diff
 
 
 def test_stylish_json_files():
