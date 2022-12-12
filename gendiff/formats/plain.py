@@ -23,24 +23,24 @@ def plain(diff_tree, path=None):  # noqa: C901
     phrase_lst = []
     for item in range(len(diff_tree)):
         new_path = path + diff_tree[item]['name']
-        if diff_tree[item]['type'] == 'internal node':
+        if 'children' in diff_tree[item]:
             phrase_lst.append(plain(diff_tree[item]['children'],
                               new_path + '.'))
         sentence = 'Property ' + '\'' + new_path + '\''
-        value = '[complex value]' if diff_tree[item]['type'] == 'internal node'\
-            else diff_tree[item]['value']
-        if diff_tree[item]['action'] == 'add':
+        value = '[complex value]' if \
+            ('children' in diff_tree[item]  # noqa: W503
+             or isinstance(diff_tree[item]['value'], list))\
+            else diff_tree[item]['value']  # noqa: W503
+        if diff_tree[item]['type'] == 'add':
             phrase_lst.append(sentence + ' was added with value: '
                               + get_format_values(value))  # noqa: W503
-        if diff_tree[item]['action'] == 'delete':
+        if diff_tree[item]['type'] == 'delete':
             phrase_lst.append(sentence + ' was removed')
-        if diff_tree[item]['action'] == 'to update':
+        if diff_tree[item]['type'] == 'updated':
             before_value = get_format_values(value)
-            after_value = '[complex value]' \
-                if diff_tree[item + 1]['type'] == 'internal node'\
-                else diff_tree[item + 1]['value']
+            after_value = get_format_values(diff_tree[item]['new_value'])
             complex_str = f'{sentence} was updated.' \
                           f' From {before_value}' \
-                          f' to {get_format_values(after_value)}'
+                          f' to {after_value}'
             phrase_lst.append(complex_str)
     return phrase_lst

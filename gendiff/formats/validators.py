@@ -1,8 +1,6 @@
-
-
 def get_valid_data(diff_tree):
     for node in diff_tree:
-        if node['type'] == 'internal node':
+        if "children" in node:
             get_valid_data(node['children'])
         else:
             if type(node['value']) is bool:
@@ -13,7 +11,6 @@ def get_valid_data(diff_tree):
 
 
 def get_format_values(value):
-    # print(value, type(value))
     if value is True:
         value = 'true'
     elif value is False:

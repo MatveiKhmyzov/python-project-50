@@ -1,199 +1,152 @@
 [
- {
-  "name": "common",
-  "action": "not changed",
-  "type": "internal node",
-  "children": [
+    {
+        "name": "common",
+        "type": "nested",
+        "children": [
                {
-                "name": "follow",
-                "action": "add",
-                "type": "leaf",
-                "value": "false"
+                   "name": "follow",
+                   "type": "add",
+                   "value": "false"
                },
                {
-                "name": "setting1",
-                "action": "not changed",
-                "type": "leaf",
-                "value": "Value 1"
+                   "name": "setting1",
+                   "type": "not changed",
+                   "value": "Value 1"
                },
                {
-                "name": "setting2",
-                "action": "delete",
-                "type": "leaf",
-                "value": "200"
+                   "name": "setting2",
+                   "type": "delete",
+                   "value": "200"
                },
                {
-                "name": "setting3",
-                "action": "to update",
-                "type": "leaf",
-                "value": "true"
+                   "name": "setting3",
+                   "type": "updated",
+                   "value": "true",
+                   "new_value": "None"
                },
                {
-                "name": "setting3",
-                "action": "updated",
-                "type": "leaf",
-                "value": "null"
+                   "name": "setting4",
+                   "type": "add",
+                   "value": "blah blah"
                },
                {
-                "name": "setting4",
-                "action": "add",
-                "type": "leaf",
-                "value": "blah blah"
-               },
-               {
-                "name": "setting5",
-                "action": "add",
-                "type": "internal node",
-                "children": [
-                             {
+                   "name": "setting5",
+                   "type": "add",
+                   "value": [
+                          {
                               "name": "key5",
-                              "action": "not changed",
-                              "type": "leaf",
+                              "type": "not changed",
                               "value": "value5"
-                             }
-                            ]
+                          }
+                   ]
                },
                {
-                "name": "setting6",
-                "action": "not changed",
-                "type": "internal node",
-                "children": [
-                             {
+                   "name": "setting6",
+                   "type": "nested",
+                   "children": [
+                          {
                               "name": "doge",
-                              "action": "not changed",
-                              "type": "internal node",
+                              "type": "nested",
                               "children": [
-                                           {
-                                            "name": "wow",
-                                            "action": "to update",
-                                            "type": "leaf",
-                                            "value": ""
-                                           },
-                                           {
-                                            "name": "wow",
-                                            "action": "updated",
-                                            "type": "leaf",
-                                            "value": "so much"
-                                           }
-                                          ]
-                             },
-                             {
+                                     {
+                                         "name": "wow",
+                                         "type": "updated",
+                                         "value": "",
+                                         "new_value": "so much"
+                                     }
+                              ]
+                          },
+                          {
                               "name": "key",
-                              "action": "not changed",
-                              "type": "leaf",
+                              "type": "not changed",
                               "value": "value"
-                             },
-                             {
+                          },
+                          {
                               "name": "ops",
-                              "action": "add",
-                              "type": "leaf",
+                              "type": "add",
                               "value": "vops"
-                             }
-                            ]
+                          }
+                   ]
                }
-              ]
- },
- {
-  "name": "group1",
-  "action": "not changed",
-  "type": "internal node",
-  "children": [
+        ]
+    },
+    {
+        "name": "group1",
+        "type": "nested",
+        "children": [
                {
-                "name": "baz",
-                "action": "to update",
-                "type": "leaf",
-                "value": "bas"
+                   "name": "baz",
+                   "type": "updated",
+                   "value": "bas",
+                   "new_value": "bars"
                },
                {
-                "name": "baz",
-                "action": "updated",
-                "type": "leaf",
-                "value": "bars"
+                   "name": "foo",
+                   "type": "not changed",
+                   "value": "bar"
                },
                {
-                "name": "foo",
-                "action": "not changed",
-                "type": "leaf",
-                "value": "bar"
-               },
-               {
-                "name": "nest",
-                "action": "to update",
-                "type": "internal node",
-                "children": [
-                             {
+                   "name": "nest",
+                   "type": "updated",
+                   "value": [
+                          {
                               "name": "key",
-                              "action": "not changed",
-                              "type": "leaf",
+                              "type": "not changed",
                               "value": "value"
-                             }
-                            ]
-               },
-               {
-                "name": "nest",
-                "action": "updated",
-                "type": "leaf",
-                "value": "str"
+                          }
+                   ],
+                   "new_value": "str"
                }
-              ]
- },
- {
-  "name": "group2",
-  "action": "delete",
-  "type": "internal node",
-  "children": [
+        ]
+    },
+    {
+        "name": "group2",
+        "type": "delete",
+        "value": [
                {
-                "name": "abc",
-                "action": "not changed",
-                "type": "leaf",
-                "value": "12345"
+                   "name": "abc",
+                   "type": "not changed",
+                   "value": "12345"
                },
                {
-                "name": "deep",
-                "action": "not changed",
-                "type": "internal node",
-                "children": [
-                             {
+                   "name": "deep",
+                   "type": "not changed",
+                   "value": [
+                          {
                               "name": "id",
-                              "action": "not changed",
-                              "type": "leaf",
+                              "type": "not changed",
                               "value": "45"
-                             }
-                            ]
+                          }
+                   ]
                }
-              ]
- },
- {
-  "name": "group3",
-  "action": "add",
-  "type": "internal node",
-  "children": [
+        ]
+    },
+    {
+        "name": "group3",
+        "type": "add",
+        "value": [
                {
-                "name": "deep",
-                "action": "not changed",
-                "type": "internal node",
-                "children": [
-                             {
+                   "name": "deep",
+                   "type": "not changed",
+                   "value": [
+                          {
                               "name": "id",
-                              "action": "not changed",
-                              "type": "internal node",
-                              "children": [
-                                           {
-                                            "name": "number",
-                                            "action": "not changed",
-                                            "type": "leaf",
-                                            "value": "45"
-                                           }
-                                          ]
-                             }
-                            ]
+                              "type": "not changed",
+                              "value": [
+                                     {
+                                         "name": "number",
+                                         "type": "not changed",
+                                         "value": "45"
+                                     }
+                              ]
+                          }
+                   ]
                },
                {
-                "name": "fee",
-                "action": "not changed",
-                "type": "leaf",
-                "value": "100500"
+                   "name": "fee",
+                   "type": "not changed",
+                   "value": "100500"
                }
-              ]
- }
+        ]
+    }
 ]

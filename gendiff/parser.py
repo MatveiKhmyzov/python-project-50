@@ -1,130 +1,79 @@
 from gendiff.formats.formatter import get_formatted_data
+from os import path
 import json
 import yaml
 
 
-def reader(path_file):
-    if ".json" in path_file:
-        return json.load(open(path_file))
+NOT_CHANGED = "not changed"
+ADD = "add"
+DELETE = "delete"
+UPDATED = "updated"
+NESTED = "nested"
+
+
+def convert_in_dict(path_file):
+    file_extension = path.splitext(path_file)[1]
+    return read_file(path_file, file_extension)
+
+
+def read_file(file, file_extension):
+    if file_extension == ".json":
+        return json.load(open(file))
+    if file_extension == ".yaml" or file_extension == ".yml":
+        return yaml.load(open(file), Loader=yaml.SafeLoader)
     else:
-        return yaml.load(open(path_file), Loader=yaml.SafeLoader)
+        raise Exception("Unknown extension!")
 
 
 def get_tree(node):
     res = []
-    for key in node.keys():
-        if type(node[key]) is dict:
-            res.append({
-                'name': key,
-                'action': 'not changed',
-                'type': 'internal node',
-                'children': get_tree(node[key])
-            })
-        else:
-            res.append({
-                'name': key,
-                'action': 'not changed',
-                'type': 'leaf',
-                'value': node[key]
-            })
-    return res
-
-
-def sort_diff(diff_tree):
-    sorted_dict = sorted(diff_tree, key=lambda d: d['name'])
-    for item in sorted_dict:
-        if item['type'] == 'internal node':
-            item['children'] = sort_diff(item['children'])
-    return sorted_dict
+    if type(node) is dict:
+        for key in node.keys():
+            res.append(create_node(key, NOT_CHANGED, get_tree(node[key])))
+        return res
+    else:
+        return node
 
 
 def generate_diff(path_file1, path_file2, format_name="stylish"):
-    file1 = reader(path_file1)
-    file2 = reader(path_file2)
+    file1 = convert_in_dict(path_file1)
+    file2 = convert_in_dict(path_file2)
     diff_tree = get_diff(file1, file2)
     return get_formatted_data(diff_tree, format_name)
 
 
-def get_diff(file1, file2):  # noqa: C901
-    union_keys = list(file1.keys() & file2.keys())
-    only_first_file_keys = list(file1.keys() - file2.keys())
-    only_second_file_keys = list(file2.keys() - file1.keys())
+def create_node(name=None, state_type=None,
+                value=None, updated_value="smthng"):
+    node = {
+        'name': name,
+        'type': state_type,
+    }
+    if state_type == 'nested':
+        node['children'] = value
+    else:
+        node['value'] = value
+    if updated_value != "smthng":
+        node["new_value"] = updated_value
+    elif updated_value is None:
+        node["new_value"] = updated_value
+    return node
+
+
+def get_diff(file1, file2):
+    union_keys = (file1.keys() | file2.keys())
     diff_tree = []
     for key in union_keys:
-        if file1[key] == file2[key]:
-            diff_tree.append({
-                'name': key,
-                'action': 'not changed',
-                'type': 'leaf',
-                'value': file1[key]
-            })
-        if file1[key] != file2[key]:
-            if type(file1[key]) == dict and type(file2[key]) == dict:
-                diff_tree.append({
-                    'name': key,
-                    'action': 'not changed',
-                    'type': 'internal node',
-                    'children': get_diff(file1[key], file2[key])
-                })
-            else:
-                if type(file1[key]) == dict:
-                    diff_tree.append({
-                        'name': key,
-                        'action': 'to update',
-                        'type': 'internal node',
-                        'children': get_tree(file1[key])
-                    })
-                else:
-                    diff_tree.append({
-                        'name': key,
-                        'action': 'to update',
-                        'type': 'leaf',
-                        'value': file1[key]
-                    })
-                if type(file2[key]) == dict:
-                    diff_tree.append({
-                        'name': key,
-                        'action': 'updated',
-                        'type': 'internal node',
-                        'children': get_tree(file2[key])
-                    })
-                else:
-                    diff_tree.append({
-                        'name': key,
-                        'action': 'updated',
-                        'type': 'leaf',
-                        'value': file2[key]
-                    })
-
-    for key in only_first_file_keys:
-        if type(file1[key]) is dict:
-            diff_tree.append({
-                'name': key,
-                'action': 'delete',
-                'type': 'internal node',
-                'children': get_tree(file1[key])
-            })
+        if key not in file2:
+            diff_tree.append(create_node(key, DELETE, get_tree(file1[key])))
+        elif key not in file1:
+            diff_tree.append(create_node(key, ADD, get_tree(file2[key])))
+        elif type(file1[key]) == dict and type(file2[key]) == dict:
+            diff_tree.append(create_node(key, NESTED,
+                                         get_diff(file1[key], file2[key])))
+        elif file1[key] == file2[key]:
+            diff_tree.append(create_node(key, NOT_CHANGED,
+                                         get_tree(file1[key])))
         else:
-            diff_tree.append({
-                'name': key,
-                'action': 'delete',
-                'type': 'leaf',
-                'value': file1[key]
-            })
-    for key in only_second_file_keys:
-        if type(file2[key]) is dict:
-            diff_tree.append({
-                'name': key,
-                'action': 'add',
-                'type': 'internal node',
-                'children': get_tree(file2[key])
-            })
-        else:
-            diff_tree.append({
-                'name': key,
-                'action': 'add',
-                'type': 'leaf',
-                'value': file2[key]
-            })
-
-    return sort_diff(diff_tree)
+            diff_tree.append(create_node(key, UPDATED, get_tree(file1[key]),
+                                         updated_value=get_tree(file2[key])))
+    return diff_tree
