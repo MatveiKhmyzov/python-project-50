@@ -23,4 +23,4 @@ def get_formatted_data(file, name_format):
         return get_plain(sort_diff(file))
     if name_format == JSON_FORMAT:
         return get_json(sort_diff(file))
-    raise "Unknown format!"
+    raise Exception("Unknown format!")
