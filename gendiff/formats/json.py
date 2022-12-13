@@ -18,21 +18,21 @@ def get_json(result_dict, level_nest=0):  # noqa: C901
         dict_elem_count = 0
         result_view += indent[:-4] + "{\n"
         for key, value in valid_dict[d].items():
+            leaf_node = indent + '"' + key + '"' + ': '\
+                + '"' + str(value) + '"'
             if type(value) is list or isinstance(value, dict):
+                nested_node = indent + '"' + key + '"' + ': ' \
+                    + get_json(value, level_nest + 1) + indent
                 if dict_elem_count == d_len - 1:
-                    result_view += indent + '"' + key + '"' + ': ' \
-                        + get_json(value, level_nest + 1) + indent + "]\n"
+                    result_view += nested_node + "]\n"
                 else:
-                    result_view += indent + '"' + key + '"' + ': ' \
-                        + get_json(value, level_nest + 1) + indent + "],\n"
+                    result_view += nested_node + "],\n"
                     dict_elem_count += 1
             else:
                 if dict_elem_count == d_len - 1:
-                    result_view += indent + '"' + key + '"' + ': '\
-                        + '"' + str(value) + '"' + '\n'
+                    result_view += leaf_node + '\n'
                 else:
-                    result_view += indent + '"' + key + '"' + ': '\
-                        + '"' + str(value) + '"' + ',' + '\n'
+                    result_view += leaf_node + ',' + '\n'
                     dict_elem_count += 1
         if d == len(valid_dict) - 1:
             result_view += indent[:-4] + "}\n"
