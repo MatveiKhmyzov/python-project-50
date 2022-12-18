@@ -22,7 +22,7 @@
                    "name": "setting3",
                    "type": "updated",
                    "value": "true",
-                   "new_value": "None"
+                   "new_value": "null"
                },
                {
                    "name": "setting4",
@@ -32,13 +32,9 @@
                {
                    "name": "setting5",
                    "type": "add",
-                   "value": [
-                          {
-                              "name": "key5",
-                              "type": "not changed",
-                              "value": "value5"
-                          }
-                   ]
+                   "value": {
+                       "key5": "value5"
+                   }
                },
                {
                    "name": "setting6",
@@ -88,13 +84,9 @@
                {
                    "name": "nest",
                    "type": "updated",
-                   "value": [
-                          {
-                              "name": "key",
-                              "type": "not changed",
-                              "value": "value"
-                          }
-                   ],
+                   "value": {
+                       "key": "value"
+                   },
                    "new_value": "str"
                }
         ]
@@ -102,51 +94,23 @@
     {
         "name": "group2",
         "type": "delete",
-        "value": [
-               {
-                   "name": "abc",
-                   "type": "not changed",
-                   "value": "12345"
-               },
-               {
-                   "name": "deep",
-                   "type": "not changed",
-                   "value": [
-                          {
-                              "name": "id",
-                              "type": "not changed",
-                              "value": "45"
-                          }
-                   ]
-               }
-        ]
+        "value": {
+            "abc": 12345,
+            "deep": {
+                "id": 45
+            }
+        }
     },
     {
         "name": "group3",
         "type": "add",
-        "value": [
-               {
-                   "name": "deep",
-                   "type": "not changed",
-                   "value": [
-                          {
-                              "name": "id",
-                              "type": "not changed",
-                              "value": [
-                                     {
-                                         "name": "number",
-                                         "type": "not changed",
-                                         "value": "45"
-                                     }
-                              ]
-                          }
-                   ]
-               },
-               {
-                   "name": "fee",
-                   "type": "not changed",
-                   "value": "100500"
-               }
-        ]
+        "value": {
+            "deep": {
+                "id": {
+                    "number": 45
+                }
+            },
+            "fee": 100500
+        }
     }
 ]

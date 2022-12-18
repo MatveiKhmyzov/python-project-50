@@ -3,6 +3,12 @@
 [![gendiff](https://github.com/MatveiKhmyzov/python-project-50/actions/workflows/gendiff.yml/badge.svg)](https://github.com/MatveiKhmyzov/python-project-50/actions/workflows/gendiff.yml)
 [![Maintainability](https://api.codeclimate.com/v1/badges/4342d0903078ab87467f/maintainability)](https://codeclimate.com/github/MatveiKhmyzov/python-project-50/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/4342d0903078ab87467f/test_coverage)](https://codeclimate.com/github/MatveiKhmyzov/python-project-50/test_coverage)
+## About project
+Project "Difference calculator" is a console utility that determines the difference between two data structures.
+It works with yaml and json input data formats and generates reports on changes in the first file relative to the second one. Reports are presented in three different representations: JSON,
+a report highlighting changed information by adding +- signs and a report with a verbal description of the changes.
+Installed by generating a whl file (make a build) and then install it by entering the package manager.
+The utility is called by the "gendiff" command. Work examples below:
 ### Gendiff example work
 [![asciicast](https://asciinema.org/a/G5To8to4IB5zAZMqXg8ZiUR9y.svg)](https://asciinema.org/a/G5To8to4IB5zAZMqXg8ZiUR9y)
 ### Gendiff JSON and YAML

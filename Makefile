@@ -1,7 +1,7 @@
 install:
 		poetry install
 start:
-		poetry run gendiff -f json /home/matveik/dev_work/projects/bigfile1.json /home/matveik/dev_work/projects/bigfile2.yaml
+		poetry run gendiff -f plain tests/fixtures/bigfile1.json tests/fixtures/bigfile2.yaml
 build:
 		poetry build
 
