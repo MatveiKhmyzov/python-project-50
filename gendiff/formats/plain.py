@@ -1,4 +1,4 @@
-from gendiff.constants import ADD, DELETE, UPDATED, NESTED
+from gendiff.utils.constants import ADD, DELETE, UPDATED, NESTED
 
 
 def get_plain(diff_tree):

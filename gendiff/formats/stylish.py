@@ -1,4 +1,4 @@
-from gendiff.constants import NOT_CHANGED, ADD, DELETE, UPDATED, NESTED
+from gendiff.utils.constants import NOT_CHANGED, ADD, DELETE, UPDATED, NESTED
 
 
 def get_stylish(file):

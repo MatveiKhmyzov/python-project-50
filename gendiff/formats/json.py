@@ -1,5 +1,5 @@
 import json
-from gendiff.constants import ADD, DELETE, UPDATED, NESTED, NOT_CHANGED
+from gendiff.utils.constants import ADD, DELETE, UPDATED, NESTED, NOT_CHANGED
 
 
 def get_json(result_dict):
