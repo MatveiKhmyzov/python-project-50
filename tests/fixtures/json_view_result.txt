@@ -3,92 +3,92 @@
         "name": "common",
         "type": "nested",
         "children": [
-               {
-                   "name": "follow",
-                   "type": "add",
-                   "value": "false"
-               },
-               {
-                   "name": "setting1",
-                   "type": "not changed",
-                   "value": "Value 1"
-               },
-               {
-                   "name": "setting2",
-                   "type": "delete",
-                   "value": "200"
-               },
-               {
-                   "name": "setting3",
-                   "type": "updated",
-                   "value": "true",
-                   "new_value": "null"
-               },
-               {
-                   "name": "setting4",
-                   "type": "add",
-                   "value": "blah blah"
-               },
-               {
-                   "name": "setting5",
-                   "type": "add",
-                   "value": {
-                       "key5": "value5"
-                   }
-               },
-               {
-                   "name": "setting6",
-                   "type": "nested",
-                   "children": [
-                          {
-                              "name": "doge",
-                              "type": "nested",
-                              "children": [
-                                     {
-                                         "name": "wow",
-                                         "type": "updated",
-                                         "value": "",
-                                         "new_value": "so much"
-                                     }
-                              ]
-                          },
-                          {
-                              "name": "key",
-                              "type": "not changed",
-                              "value": "value"
-                          },
-                          {
-                              "name": "ops",
-                              "type": "add",
-                              "value": "vops"
-                          }
-                   ]
-               }
+            {
+                "name": "follow",
+                "type": "add",
+                "value": false
+            },
+            {
+                "name": "setting1",
+                "type": "not changed",
+                "value": "Value 1"
+            },
+            {
+                "name": "setting2",
+                "type": "delete",
+                "value": 200
+            },
+            {
+                "name": "setting3",
+                "type": "updated",
+                "value": true,
+                "new_value": null
+            },
+            {
+                "name": "setting4",
+                "type": "add",
+                "value": "blah blah"
+            },
+            {
+                "name": "setting5",
+                "type": "add",
+                "value": {
+                    "key5": "value5"
+                }
+            },
+            {
+                "name": "setting6",
+                "type": "nested",
+                "children": [
+                    {
+                        "name": "doge",
+                        "type": "nested",
+                        "children": [
+                            {
+                                "name": "wow",
+                                "type": "updated",
+                                "value": "",
+                                "new_value": "so much"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "key",
+                        "type": "not changed",
+                        "value": "value"
+                    },
+                    {
+                        "name": "ops",
+                        "type": "add",
+                        "value": "vops"
+                    }
+                ]
+            }
         ]
     },
     {
         "name": "group1",
         "type": "nested",
         "children": [
-               {
-                   "name": "baz",
-                   "type": "updated",
-                   "value": "bas",
-                   "new_value": "bars"
-               },
-               {
-                   "name": "foo",
-                   "type": "not changed",
-                   "value": "bar"
-               },
-               {
-                   "name": "nest",
-                   "type": "updated",
-                   "value": {
-                       "key": "value"
-                   },
-                   "new_value": "str"
-               }
+            {
+                "name": "baz",
+                "type": "updated",
+                "value": "bas",
+                "new_value": "bars"
+            },
+            {
+                "name": "foo",
+                "type": "not changed",
+                "value": "bar"
+            },
+            {
+                "name": "nest",
+                "type": "updated",
+                "value": {
+                    "key": "value"
+                },
+                "new_value": "str"
+            }
         ]
     },
     {

@@ -1,5 +1,5 @@
-from gendiff.parser import generate_diff
-from gendiff.cli import get_args
+from gendiff.generate_diff import generate_diff
+from gendiff.utils.cli import get_args
 from gendiff.formats.formatter import get_formatted_data
 
 

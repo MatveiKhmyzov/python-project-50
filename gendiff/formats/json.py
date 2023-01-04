@@ -1,47 +1,36 @@
-from gendiff.formats.validators import format_json_values
-
-# import json
-
-
-# def get_json(result_dict):
-#     valid_dict = get_valid_data(result_dict)
-#     return json.dumps(valid_dict, indent=4)
+import json
+from gendiff.constants import ADD, DELETE, UPDATED, NESTED, NOT_CHANGED
 
 
-def get_json(file):
-    return json_view(file)
+def get_json(result_dict):
+    return json.dumps(get_clean_diff(result_dict), indent=4)
 
 
-def json_view(diff_tree, level_nest=0):  # noqa: C901
-    sorted_diff = sorted(diff_tree, key=lambda d: d['name'])
-    result_view = '[\n'
-    indent = '        '
-    for i in range(level_nest):
-        indent += '           '
-    for d in range(len(sorted_diff)):
-        d_len = len(sorted_diff[d])
-        dict_elem_count = 0
-        result_view += indent[:-4] + "{\n"
-        for key, value in sorted_diff[d].items():
-            if isinstance(value, list):
-                result_view += indent + '"' + key + '"' + ': ' \
-                    + json_view(value, level_nest + 1) + indent + "]\n"
-            else:
-                if isinstance(value, dict):
-                    result_view += indent + '"' + key + '"' + ': ' \
-                        + format_json_values(value, indent)
-                else:
-                    result_view += indent + '"' + key + '"' + ': ' \
-                        + '"' + format_json_values(value, indent) + '"'
-                if dict_elem_count == d_len - 1:
-                    result_view += '\n'
-                else:
-                    result_view += ',' + '\n'
-                    dict_elem_count += 1
-        if d == len(sorted_diff) - 1:
-            result_view += indent[:-4] + "}\n"
-        else:
-            result_view += indent[:-4] + "},\n"
-    if level_nest == 0:
-        result_view += "]"
-    return result_view
+def sort_diff(diff_tree):
+    sorted_dict = sorted(diff_tree, key=lambda d: d['name'])
+    for item in sorted_dict:
+        if item['type'] == NESTED:
+            item['children'] = sort_diff(item['children'])
+    return sorted_dict
+
+
+def get_clean_diff(iterable):
+    clean_diff = []
+    for dct in iterable:
+        clean_node = {
+            'name': dct['name'],
+            'type': dct['type']
+        }
+        if dct['type'] == ADD\
+                or dct['type'] == DELETE\
+                or dct['type'] == NOT_CHANGED:
+            clean_node['value'] = dct['value']
+        if dct['type'] == UPDATED:
+            clean_node['value'] = dct['value']
+            clean_node['new_value'] = dct['new_value']
+        if dct['type'] == NESTED:
+            clean_node['children'] = get_clean_diff(dct['children'])
+
+        clean_diff.append(clean_node)
+
+    return sort_diff(clean_diff)
