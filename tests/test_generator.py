@@ -53,4 +53,3 @@ def get_correct_answer_path(format_name):
     for elem in result_filepaths:
         if format_name in elem:
             return elem
-    
