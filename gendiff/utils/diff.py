@@ -21,7 +21,7 @@ def get_diff(file1, file2):
             diff_tree.append(create_node(key, DELETE, None, file1[key], None))
         elif key not in file1:
             diff_tree.append(create_node(key, ADD, None, file2[key], None))
-        elif type(file1[key]) == dict and type(file2[key]) == dict:
+        elif isinstance(file1[key], dict) and isinstance(file2[key], dict):
             diff_tree.append(create_node(key, NESTED,
                              get_diff(file1[key], file2[key]), None, None))
         elif file1[key] == file2[key]:

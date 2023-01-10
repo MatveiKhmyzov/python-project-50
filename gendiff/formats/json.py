@@ -14,9 +14,9 @@ def sort_diff(diff_tree):
     return sorted_dict
 
 
-def get_clean_diff(iterable):
+def get_clean_diff(diff):
     clean_diff = []
-    for dct in iterable:
+    for dct in diff:
         clean_node = {
             'name': dct['name'],
             'type': dct['type']
