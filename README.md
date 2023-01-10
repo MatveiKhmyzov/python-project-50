@@ -7,9 +7,9 @@
 Project "Difference calculator" is a console utility that determines the difference between two data structures.
 It works with yaml and json input data formats and generates reports on changes in the first file relative to the second one. Reports are presented in three different representations: JSON,
 a report highlighting changed information by adding +- signs and a report with a verbal description of the changes.
-To install the package on the system, firstly, run the command ####make install#### to install dependencies,
-then ####make build#### and ####make package-install####. After those actions it may be able to run utility with
-command ####gendiff####, otherwise you can do only one command ####make start. Versions of Python and Poetry are 3.10 and 1.1.13 respectively
+To install the package on the system, firstly, run the command **make install** to install dependencies,
+then **make build** and **make package-install**. After those actions it may be able to run utility with
+command **gendiff**, otherwise you can do only one command **make start**. Versions of Python and Poetry are 3.10 and 1.1.13 respectively
 Work examples below:
 ### Gendiff example work
 [![asciicast](https://asciinema.org/a/G5To8to4IB5zAZMqXg8ZiUR9y.svg)](https://asciinema.org/a/G5To8to4IB5zAZMqXg8ZiUR9y)
