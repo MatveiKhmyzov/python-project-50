@@ -1,8 +1,7 @@
 [tool.poetry]
 name = "hexlet-code"
 version = "0.1.0"
-description = """console utility that determines the difference between 
-                 two data structures (JSON or YAML)"""
+description = "console utility that determines the difference between two data structures (JSON or YAML)"
 authors = ["Matvei Khmyzov <matw.hmizov@yandex.ru>"]
 packages = [
     { include = "gendiff"}
